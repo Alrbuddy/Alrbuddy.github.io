@@ -19,8 +19,10 @@ function getCookie(name) {
     return null;
 }
 
-function generatePermanentKey(token) {
+function generatePermanentKey() {
     var existingKey = getCookie("permanent_key");
+    var existingToken = getToken();
+
     if (!existingKey) {
         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         var permanentKey = '';
@@ -28,17 +30,38 @@ function generatePermanentKey(token) {
             var randomIndex = Math.floor(Math.random() * characters.length);
             permanentKey += characters.charAt(randomIndex);
         }
-        setCookie("permanent_key", permanentKey, 365);  // Set the cookie to last for a year
-        return permanentKey;
-    } else {
-        return existingKey;
+        setCookie("permanent_key", permanentKey, 365);
+    }
+
+    if (!existingToken) {
+        var token = generateToken();
+        setCookie("token", token, 365);
+    }
+
+    return existingKey || permanentKey;
+}
+
+function getToken() {
+    return getCookie("token");
+}
+
+function generateToken() {
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var token = '';
+    for (var i = 0; i < 32; i++) {
+        var randomIndex = Math.floor(Math.random() * characters.length);
+        token += characters.charAt(randomIndex);
+    }
+    return token;
+}
+
+function displayToken() {
+    var token = getToken();
+    var tokenElement = document.getElementById("token");
+    if (token && tokenElement) {
+        tokenElement.textContent = "Your Token: " + token;
     }
 }
 
-// Get the token from the URL query string
-var urlParams = new URLSearchParams(window.location.search);
-var token = urlParams.get("token");
-
-// Generate the permanent key using the token
-var permanentKey = generatePermanentKey(token);
-setCookie("user_token", token, 365);  // Set the user token as a cookie
+// Call the displayToken() function to show the token on the website
+displayToken();
