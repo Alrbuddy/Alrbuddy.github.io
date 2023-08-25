@@ -19,7 +19,7 @@ function getCookie(name) {
     return null;
 }
 
-function generatePermanentKey() {
+function generatePermanentKey(authorizationToken) {
     var existingKey = getCookie("permanent_key");
     if (!existingKey) {
         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -29,8 +29,12 @@ function generatePermanentKey() {
             permanentKey += characters.charAt(randomIndex);
         }
         setCookie("permanent_key", permanentKey, 365);  // Set the cookie to last for a year
+        if (authorizationToken) {
+            setCookie("authorization_token", authorizationToken, 365);
+        }
         return permanentKey;
     } else {
         return existingKey;
     }
 }
+
