@@ -1,3 +1,4 @@
+// Function to set a cookie
 function setCookie(name, value, days) {
     var expires = "";
     if (days) {
@@ -8,6 +9,7 @@ function setCookie(name, value, days) {
     document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
 
+// Function to get a cookie
 function getCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
@@ -19,6 +21,7 @@ function getCookie(name) {
     return null;
 }
 
+// Function to generate a permanent key
 function generatePermanentKey() {
     var existingKey = getCookie("permanent_key");
     var existingToken = getToken();
@@ -41,10 +44,7 @@ function generatePermanentKey() {
     return existingKey || permanentKey;
 }
 
-function getToken() {
-    return getCookie("token");
-}
-
+// Function to generate a token
 function generateToken() {
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var token = '';
@@ -55,12 +55,20 @@ function generateToken() {
     return token;
 }
 
-function displayToken() {
+// Expose an API endpoint to retrieve user information
+app.get('/api/userinfo', (req, res) => {
     var token = getToken();
-    var tokenElement = document.getElementById("token");
-    if (token && tokenElement) {
-        tokenElement.textContent = "Your Token: " + token;
-    }
+    var permanentKey = generatePermanentKey();
+
+    res.json({
+        token: token,
+        permanentKey: permanentKey
+    });
+});
+
+// Function to get the user's token
+function getToken() {
+    return getCookie("token");
 }
 
 // Call the displayToken() function to show the token on the website
