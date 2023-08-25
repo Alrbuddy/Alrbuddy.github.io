@@ -8,7 +8,7 @@
     <h1>Random and Permanent Key Generator</h1>
     <p>Your Random Key: <span id="random-key"></span></p>
     <p>Your Permanent Key: <span id="permanent-key"></span></p>
-    <p id="token"></p>
+    <p>Your Token: <span id="token"></span></p>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -29,6 +29,10 @@
             // Generate and display permanent key
             var permanentKey = generatePermanentKey();
             document.getElementById("permanent-key").textContent = permanentKey;
+            
+            // Display token
+            var token = getToken();
+            document.getElementById("token").textContent = token;
         });
     </script>
 </body>
