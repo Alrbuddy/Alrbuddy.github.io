@@ -8,26 +8,13 @@
     <h1>Random and Permanent Key Generator</h1>
     <p>Your Random Key: <span id="random-key"></span></p>
     <p>Your Permanent Key: <span id="permanent-key"></span></p>
+    <p>Your Token: <span id="user-token"></span></p>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Generate and display random key
-            function generateRandomKey() {
-                var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-                var randomKey = '';
-                for (var i = 0; i < 10; i++) {
-                    var randomIndex = Math.floor(Math.random() * characters.length);
-                    randomKey += characters.charAt(randomIndex);
-                }
-                return randomKey;
-            }
-            
-            var randomKey = generateRandomKey();
-            document.getElementById("random-key").textContent = randomKey;
-            
-            // Generate and display permanent key
-            var permanentKey = generatePermanentKey();
-            document.getElementById("permanent-key").textContent = permanentKey;
+            // Display the user's token
+            var userToken = getCookie("user_token");
+            document.getElementById("user-token").textContent = userToken;
         });
     </script>
 </body>
