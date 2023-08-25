@@ -19,7 +19,7 @@ function getCookie(name) {
     return null;
 }
 
-function generatePermanentKey(authorizationToken) {
+function generatePermanentKey(token) {
     var existingKey = getCookie("permanent_key");
     if (!existingKey) {
         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -29,11 +29,16 @@ function generatePermanentKey(authorizationToken) {
             permanentKey += characters.charAt(randomIndex);
         }
         setCookie("permanent_key", permanentKey, 365);  // Set the cookie to last for a year
-        if (authorizationToken) {
-            setCookie("authorization_token", authorizationToken, 365);
-        }
         return permanentKey;
     } else {
         return existingKey;
     }
 }
+
+// Get the token from the URL query string
+var urlParams = new URLSearchParams(window.location.search);
+var token = urlParams.get("token");
+
+// Generate the permanent key using the token
+var permanentKey = generatePermanentKey(token);
+setCookie("user_token", token, 365);  // Set the user token as a cookie
