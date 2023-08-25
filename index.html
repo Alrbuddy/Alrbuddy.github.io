@@ -2,21 +2,33 @@
 <html>
 <head>
     <title>Key Generator</title>
+    <script src="permanent_key.js"></script>
 </head>
 <body>
-    <h1>Random Key Generator</h1>
-    <p>Your Key: <span id="key"></span></p>
+    <h1>Random and Permanent Key Generator</h1>
+    <p>Your Random Key: <span id="random-key"></span></p>
+    <p>Your Permanent Key: <span id="permanent-key"></span></p>
+
     <script>
-        function generateKey() {
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            let key = '';
-            for (let i = 0; i < 10; i++) {
-                const randomIndex = Math.floor(Math.random() * characters.length);
-                key += characters.charAt(randomIndex);
+        document.addEventListener("DOMContentLoaded", function() {
+            // Generate and display random key
+            function generateRandomKey() {
+                var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                var randomKey = '';
+                for (var i = 0; i < 10; i++) {
+                    var randomIndex = Math.floor(Math.random() * characters.length);
+                    randomKey += characters.charAt(randomIndex);
+                }
+                return randomKey;
             }
-            document.getElementById('key').textContent = key;
-        }
-        generateKey();
+            
+            var randomKey = generateRandomKey();
+            document.getElementById("random-key").textContent = randomKey;
+            
+            // Generate and display permanent key
+            var permanentKey = generatePermanentKey();
+            document.getElementById("permanent-key").textContent = permanentKey;
+        });
     </script>
 </body>
 </html>
