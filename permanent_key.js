@@ -37,4 +37,3 @@ function generatePermanentKey(authorizationToken) {
         return existingKey;
     }
 }
-
